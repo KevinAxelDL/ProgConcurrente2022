@@ -58,5 +58,6 @@ public class Cajero implements Runnable{
         //Tiempo inicial de referencia
         this.tiempoInicial = System.currentTimeMillis();
         this.procesarCompra();
+        //FIN RUN
     }
 }
