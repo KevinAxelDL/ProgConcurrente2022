@@ -9,28 +9,33 @@ package TP2.Ej6;
  * @author KevinDL
  */
 public class Cajero implements Runnable{
+    private long tiempoInicial = 0, tUltimaEjecucion = 0;
     private String nombre;
+    private Cliente cteTemporal;
+    
     //Contructor
-    public Cajero(String nombre){
+    public Cajero(String nombre, Cliente cte){
         this.nombre = nombre;
+        this.cteTemporal = cte;
     }
     //
-    public void procesarCompra(Cliente cliente, long timeStamp){
-        
+    private void procesarCompra(){
         System.out.println("El cajero "+ this.nombre +" COMIENZA A PROCESAR"
-                + " LA COMPRA DE "+ cliente.getNombre() + " EN EL TIEMPO: "
-        + (System.currentTimeMillis() - timeStamp)/1000 + "seg");
+                + " LA COMPRA DE "+ this.cteTemporal + " EN EL TIEMPO: "
+        + (System.currentTimeMillis() - this.tiempoInicial)/1000 + "seg");
         //
-        for(int i = 0; i < cliente.getCarroCompra().length; i++){
-            this.esperarXsegundos(cliente.getCarroCompra()[i]);
+        int[] carro = this.cteTemporal.getCarroCompra();
+        for(int i = 0; i < carro.length; i++){
+            this.esperarXsegundos(carro[i]);
             System.out.println("Procesando el producto "+ (i + 1) +
-                    "--> Tiempo: " + (System.currentTimeMillis() - timeStamp)/
+                    "--> Tiempo: " + (System.currentTimeMillis() - this.tiempoInicial)/
                             1000 + "seg");
         }
         //
+        this.tUltimaEjecucion = System.currentTimeMillis() - this.tiempoInicial;
         System.out.println("El cajero "+ this.nombre +" HA TERMINADO DE PROCESAR "
-        + cliente.getNombre() + " EN EL TIEMPO: "+ (System.currentTimeMillis() - 
-                timeStamp)/1000 + "seg");
+        + this.cteTemporal.getNombre() + 
+                " EN EL TIEMPO: "+ this.tUltimaEjecucion/1000 + "seg");
     }
     
     private void esperarXsegundos(int i){
@@ -44,7 +49,14 @@ public class Cajero implements Runnable{
         }
     }
     
+    public long getTiempoUltimaEjecucion(){
+        return this.tUltimaEjecucion;
+    }
+    
     public void run(){
-        
+        //Codigo a ejecutar por el hilo
+        //Tiempo inicial de referencia
+        this.tiempoInicial = System.currentTimeMillis();
+        this.procesarCompra();
     }
 }
