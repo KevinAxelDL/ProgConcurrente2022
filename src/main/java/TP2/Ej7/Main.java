@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TP2.Ej6;
+package TP2.Ej7;
 
 /**
  *
@@ -10,21 +10,24 @@ package TP2.Ej6;
  */
 public class Main {
     public static void main(String[] args){
-        //IMPLEMENTACION MEDIANTE EXTENSION
-        System.out.println("--IMPLEMENTACION POR EXTENSION--");
+        //IMPLEMENTACION MEDIANTE INTERFAZ
+        System.out.println("--IMPLEMENTACION POR INTERFAZ--");
         //Declaracion e inicializacion
         Cliente cliente1 = new Cliente("Cliente 1", new int[]{2,2,1,5,2,3});
         Cliente cliente2 = new Cliente("Cliente 2", new int[]{1,3,5,1,1});
         //
         Cajero cajero1 = new Cajero("Cajero 1", cliente1);
         Cajero cajero2 = new Cajero("Cajero 2", cliente2);
+        //
+        Thread t1 = new Thread(cajero1);
+        Thread t2 = new Thread(cajero2);
         //Start
-        cajero1.start();
-        cajero2.start();
+        t1.start();
+        t2.start();
         //
         try{
-            cajero1.join();
-            cajero2.join();
+            t1.join();
+            t2.join();
         }catch(InterruptedException e){
             System.out.println(e.getMessage());
         }

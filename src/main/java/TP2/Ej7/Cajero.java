@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TP2.Ej6;
+package TP2.Ej7;
 
 /**
  *
  * @author KevinDL
  */
-public class Cajero extends Thread{
+public class Cajero implements Runnable{
     private long tiempoInicial = 0, tUltimaEjecucion = 0;
     private String nombre;
     private Cliente cteTemporal;
