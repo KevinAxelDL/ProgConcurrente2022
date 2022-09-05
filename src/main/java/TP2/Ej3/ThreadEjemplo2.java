@@ -8,19 +8,29 @@ package TP2.Ej3;
  *
  * @author KevinDL
  */
-public class ThreadEjemplo2 implements Runnable{
+public class ThreadEjemplo2 implements Runnable {
+
     //Implementacion mediante interfaz
-    String id;
-    public ThreadEjemplo2 (String str){
+    private String id;
+    private int w = 500;
+
+    public ThreadEjemplo2(String str) {
         this.id = str;
     }
-    public String getName(){
+
+    public String getName() {
         return this.id;
     }
-    public void run(){
-        for(int i=0; i<10; i++){
-            System.out.println(i+" "+ this.id);
-            System.out.println("Termina thread "+ this.id);
+
+    public void run() {
+        for (int i = 0; i < 10; i++) {
+            try {
+                System.out.println(i + " " + getName());
+                Thread.sleep(w);
+            } catch (InterruptedException e) {
+                e.getMessage();
+            }
         }
+        System.out.println("Termina thread " + getName());
     }
 }

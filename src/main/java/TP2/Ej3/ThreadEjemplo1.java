@@ -10,13 +10,20 @@ package TP2.Ej3;
  */
 public class ThreadEjemplo1 extends Thread{
     //Implementacion mediante extension
+    private int w = 500;
+    
     public ThreadEjemplo1 (String str){
         super(str);
     }
     public void run(){
         for(int i=0; i<10; i++){
-            System.out.println(i+" "+ getName());
-            System.out.println("Termina thread "+ getName());
+            try{
+                System.out.println(i+" "+ getName());
+                Thread.sleep(w);
+            }catch(InterruptedException e){
+                e.getMessage();
+            }
         }
+        System.out.println("Termina thread "+ getName());
     }
 }
