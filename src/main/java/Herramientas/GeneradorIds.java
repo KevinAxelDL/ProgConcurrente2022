@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TP3.Ej3;
+package Herramientas;
 
 /**
  *
@@ -19,6 +19,8 @@ public class GeneradorIds {
     }
     
     public String generarUnId(){
-        return (this.nombreRef+ "-" + Integer.toString(this.contadorRef));
+        String id = (this.nombreRef+ "-" + Integer.toString(this.contadorRef));
+        this.contadorRef++;
+        return id;
     }
 }

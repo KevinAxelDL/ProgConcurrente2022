@@ -23,8 +23,22 @@ public class Asiento {
         boolean ocupado = false;
         
         if(this.estado == 1){
+            //Ocupado
             ocupado = true;
+        }else{
+            //No ocupado, se ocupa
+           this.estado = 1;
         }
         return ocupado;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+    
+    
 }
