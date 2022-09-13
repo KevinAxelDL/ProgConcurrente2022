@@ -10,6 +10,17 @@ package Herramientas;
  */
 public class GeneradorIds {
     //Clase para generar IDs 
+    /*
+    La idea de esta clase es facilitar la creacion de IDs para instancias de 
+    objetos. Cada instancia de esta clase sirve como una plantilla para X tipo 
+    de ID deseado. Cada instancia tiene un contador con el fin de usarlo para 
+    diferenciar entre diferentes IDs que provienen de la misma instancia 
+    generadora.
+    Ejemplo:
+    Si se necesitan muchos IDs para diferenciar entre alumnos, se necesitara 
+    crear una instancia de GeneradorIds con nombreRef = ALUMNO, y por cada ID 
+    que se desea generar se debe usar el mensaje generarUnId()
+    */
     private int contadorRef;
     private String nombreRef;
     

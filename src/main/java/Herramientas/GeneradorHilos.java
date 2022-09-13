@@ -8,7 +8,7 @@ package Herramientas;
  *
  * @author KevinDL
  */
-public class GeneradorHilos {
+public abstract class GeneradorHilos {
     //Genera hilos funcionales con la interfaz Runnable
     public static Thread generarHilo(Runnable obj){
         //Genera un hilo con un objecto como parametro y lo retorna
