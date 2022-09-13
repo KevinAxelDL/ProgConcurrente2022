@@ -19,7 +19,9 @@ public class GeneradorIds {
     Ejemplo:
     Si se necesitan muchos IDs para diferenciar entre alumnos, se necesitara 
     crear una instancia de GeneradorIds con nombreRef = ALUMNO, y por cada ID 
-    que se desea generar se debe usar el mensaje generarUnId()
+    que se desea generar se debe usar el mensaje generarUnId().
+    Los IDs resultantes serian:
+        ALUMNO-0, ALUMNO-1, ALUMNO-3, etc.
     */
     private int contadorRef;
     private String nombreRef;
