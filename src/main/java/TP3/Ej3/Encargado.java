@@ -14,7 +14,7 @@ public class Encargado implements Runnable{
     //Hilo
     private Asiento[] asientos;//Rec Compartido
     private String id;
-    private ArrayDeque<Integer> pedidos; //Rec.Compartido
+    private ArrayDeque<Integer> pedidos;//Rec.Compartido
     
     public Encargado(Asiento[] asientos, String id, ArrayDeque pedidos){
         this.asientos = asientos;

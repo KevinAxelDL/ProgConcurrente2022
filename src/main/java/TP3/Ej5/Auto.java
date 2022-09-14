@@ -13,45 +13,49 @@ public class Auto extends Vehiculo {
     //Hilo
     public Auto(String id, String modelo, Surtidor[] colSurtidores) {
         super(id, modelo, colSurtidores); //Usa el constructor de la super
-        super.consumoXKm = 5;
-        super.capacidadLitros = 50;
-        super.capacidadLitrosActual = super.capacidadLitros;
+        this.consumoXKm = 5;
+        this.capacidadLitros = 50;
+        this.capacidadLitrosActual = this.capacidadLitros;
     }
-    
-    public void manejar(){
+
+    public void manejar() {
         //Se utiliza el vehiculo hasta que el nivel de compustible sea critico
-        
-    }
-    
-    public int surtidorDisponible(){
-        //Verifica si hay algun surtidor en condiciones de ser usado
-        int disponible = -1;
-        int i=0; //Iterador
-        while(disponible == -1 && i < this.colSurtidores.length){
-            if(this.colSurtidores[i].getDisponible()){
-                //Surtidor en i disponible
-                disponible = i;
+        boolean critico = false;
+        while (!critico) {
+            this.capacidadLitrosActual = this.capacidadLitrosActual - this.consumoXKm;
+            System.out.println("(-->)" + this.id + " andando; tanque (" + this.capacidadLitrosActual + "/" + this.capacidadLitros + ")L");//DEBUG
+            if (this.capacidadLitrosActual <= 10) {
+                //Bajo en combustible
+                critico = true;
+                System.out.println("(!!!)" + this.id + " BAJO EN COMBUSTIBLE!!");//DEBUG
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
             }
         }
-        return disponible;
     }
-    
-    public void llenarTanque(int surtidor){
-        //Se utiliza el surtidor para llenar el tanque
-        colSurtidores[surtidor].llenarTanqueDe(this);
+
+    public boolean surtidorDisponible() {
+        //Verifica si hay algun surtidor en condiciones de ser usado y lo usa
+        boolean cargo = false;
+        int i = 0; //Iterador
+        while (!cargo && i < this.colSurtidores.length) {
+            System.out.println("(...)"+ this.id +" esperando para llenar el tanque");
+            cargo = this.colSurtidores[i].llenarTanqueDe(this);
+        }
+        return cargo;
     }
 
     public void run() {
         boolean accion = true;
         while (accion) {
             manejar();
-            int disponible = surtidorDisponible();
-            if(disponible != -1){
-                //Surtidores disponibles
-                llenarTanque(disponible);
-            }else{
+            boolean cargo = surtidorDisponible();
+            if (!cargo) {
                 //No hay surtidores disponibles
-                System.out.println("(X) NO hay mas surtidores disponibles,"+ super.id +" varado");//DEBUG
+                System.out.println("(X) NO hay mas surtidores disponibles," + super.id + " varado");//DEBUG
                 accion = false;
             }
         }

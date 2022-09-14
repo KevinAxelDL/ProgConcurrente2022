@@ -24,6 +24,16 @@ public abstract class Vehiculo implements Runnable {
         this.colSurtidores = colSurtidores;
     }
 
+    public Vehiculo(String id, String modelo, int km, int consumoXKm, int capacidadLitros, Surtidor[] colSurtidores, int capacidadLitrosActual) {
+        this.id = id;
+        this.modelo = modelo;
+        this.km = km;
+        this.consumoXKm = consumoXKm;
+        this.capacidadLitros = capacidadLitros;
+        this.colSurtidores = colSurtidores;
+        this.capacidadLitrosActual = capacidadLitrosActual;
+    }
+    
     public String getId() {
         return id;
     }
