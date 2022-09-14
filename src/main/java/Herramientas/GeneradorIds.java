@@ -27,11 +27,13 @@ public class GeneradorIds {
     private String nombreRef;
     
     public GeneradorIds(String nombre){
+        //Constructor
         this.nombreRef = nombre.toUpperCase();
         this.contadorRef = 0;
     }
     
     public String generarUnId(){
+        //Retorna un String
         String id = (this.nombreRef+ "-" + Integer.toString(this.contadorRef));
         this.contadorRef++;
         return id;
