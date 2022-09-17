@@ -22,6 +22,8 @@ public class Surtidor {
     }
 
     public synchronized boolean llenarTanqueDe(Vehiculo auto) {
+        //Para mejorar: Evitar el acceso directo a los atributos de Auto sin perder su herencia.
+        //Para mejorar: Como sincronizar sin la necesidad de tener el sleep() dentro del metodo?
         //Seccion critica
         boolean cargo = false;
         if (this.capacidadLitrosActual > 0) {

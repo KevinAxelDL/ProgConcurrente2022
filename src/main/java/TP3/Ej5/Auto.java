@@ -52,7 +52,7 @@ public class Auto extends Vehiculo {
             i++;
         }
         return cargo;
-    }
+    } 
 
     public void run() {
         boolean accion = true;
