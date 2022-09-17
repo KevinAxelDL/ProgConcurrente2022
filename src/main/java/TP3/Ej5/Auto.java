@@ -42,11 +42,11 @@ public class Auto extends Vehiculo {
         boolean cargo = false;
         int i = 0; //Iterador
         while (!cargo && i < this.colSurtidores.length) {
-            System.out.println("(...) "+ this.id +" esperando para llenar el tanque");
+            System.out.println("(...) "+ this.id +" esperando para llenar el tanque");//DEBUG
             cargo = this.colSurtidores[i].llenarTanqueDe(this);
             
             if(!cargo){
-                System.out.println("(--X) " + this.id +" no pudo cargar en "+ this.colSurtidores[i].getId());
+                System.out.println("(--X) " + this.id +" no pudo cargar en "+ this.colSurtidores[i].getId());//DEBUG
             }
             
             i++;

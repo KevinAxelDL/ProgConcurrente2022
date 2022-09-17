@@ -11,7 +11,7 @@ import Herramientas.GeneradorIds;
  */
 public class Main { 
     public static void main(String[] args) {
-        System.out.println("---INICIO MAIN---");
+        System.out.println("---INICIO MAIN---");//DEBUG
 
         int cantVehiculos = 2;//Modificable
         int cantSurtidores = 1;//Modificable
