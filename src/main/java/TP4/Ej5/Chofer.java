@@ -26,14 +26,15 @@ public class Chofer implements Runnable{
 
     private void manejar() {
         //Maneja hasta el destino
-        Debugger.manejar(id, this.taxi.getPasajeroActualAux());//DEBUG
+        String pasajero = this.taxi.getPasajeroActualAux();
+        Debugger.manejar(id, pasajero);//DEBUG
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
         this.taxi.releaseEnDestino();
-        Debugger.enDestino(id, this.taxi.getPasajeroActualAux());
+        Debugger.enDestino(id, pasajero);//DEBUG
     }
 
     public void run() {

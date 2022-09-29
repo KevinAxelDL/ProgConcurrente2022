@@ -30,12 +30,15 @@ public class Taxi {
     }
     
     public synchronized void acquireAsiento(String id){
+        //DEGUG: Los synchronized sirven para la consistencia de los mensajes
         try{
             asiento.acquire();
         }catch(InterruptedException e){
             System.out.println(e.getMessage());
         }
-        this.pasajeroActualAux = id;//DEBUG
+        synchronized(this){
+            this.pasajeroActualAux = id;//DEBUG
+        }
     }
     
     public void acquireEnDestino(){    
