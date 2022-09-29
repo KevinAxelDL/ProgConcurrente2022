@@ -23,9 +23,9 @@ public class Main {
         Pasajero pas2 = new Pasajero(genPasajero.generarUnId(), taxi1);
         Chofer chof1 = new Chofer(genChofer.generarUnId(), taxi1);
 
-        Thread t1 = new Thread(pas1);
-        Thread t2 = new Thread(pas2);
-        Thread t3 = new Thread(chof1);
+        Thread t1 = GeneradorHilos.generarHilo(pas1);
+        Thread t2 = GeneradorHilos.generarHilo(pas2);
+        Thread t3 = GeneradorHilos.generarHilo(chof1);
         
         t1.start();
         t2.start();

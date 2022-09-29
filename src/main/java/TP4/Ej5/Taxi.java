@@ -15,9 +15,10 @@ public class Taxi {
     private Semaphore hayCliente = new Semaphore(0);
     private Semaphore asiento = new Semaphore(1, true);
     private Semaphore enDestino = new Semaphore(0);
+    private String pasajeroActualAux;//DEBUG
 
     Taxi(String generarUnId) {
-        
+        //...
     }
     
     public void acquireHayCliente(){
@@ -28,15 +29,16 @@ public class Taxi {
         }
     }
     
-    public void acquireAsiento(){
+    public synchronized void acquireAsiento(String id){
         try{
             asiento.acquire();
         }catch(InterruptedException e){
             System.out.println(e.getMessage());
         }
+        this.pasajeroActualAux = id;//DEBUG
     }
     
-    public void acquireEnDestino(){
+    public void acquireEnDestino(){    
         try{
             enDestino.acquire();
         }catch(InterruptedException e){
@@ -54,5 +56,9 @@ public class Taxi {
     
     public void releaseEnDestino(){
         enDestino.release();
+    }
+
+    public String getPasajeroActualAux() {
+        return pasajeroActualAux;
     }
 }

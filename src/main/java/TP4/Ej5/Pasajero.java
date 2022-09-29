@@ -8,34 +8,27 @@ package TP4.Ej5;
  *
  * @author KevinDL
  */
-public class Pasajero implements Runnable{
+public class Pasajero implements Runnable {
 
     private String id;
     private Taxi taxi;
 
     public Pasajero(String id, Taxi taxi) {
+        
         this.id = id;
         this.taxi = taxi;
     }
-    
-    private void subirAlTaxi(){
-        try{
-            taxi.acquireAsiento();//Se sienta
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        System.out.println(this.id +" subio al taxi");
+
+    private void subirAlTaxi() {
+        
+        taxi.acquireAsiento(id);//Se sienta
         taxi.releaseHayCliente();//Avisa que subio
     }
-    
-    private void bajarDelTaxi(){
-        try{
-            taxi.acquireEnDestino();
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        taxi.releaseAsiento();//Libera el taxi
-        System.out.println(this.id +" baja del taxi");
+
+    private void bajarDelTaxi() {
+        
+        taxi.acquireEnDestino();
+        taxi.releaseAsiento();//Libera el asiento
     }
 
     public void run() {

@@ -31,7 +31,7 @@ public class P2 implements Runnable {
             System.out.println(this.id);
             System.out.println("|");
 
-            this.con.sem1.release();//Libera sem1
+            this.con.sem1.release();//Libera sem1, da permiso a P1
         }
     }
 }
