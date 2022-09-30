@@ -11,8 +11,8 @@ import java.util.concurrent.Semaphore;
  * @author KevinDL
  */
 public class GestorCruce {
-    Semaphore semEstOest = new Semaphore(0);
-    Semaphore semNorSur = new Semaphore(0);
+    boolean sEstOest = false;
+    boolean sNorSur = false;
     
     Semaphore sensorInEstOest = new Semaphore(0);
     Semaphore sensorInNorSur = new Semaphore(0);

@@ -21,7 +21,7 @@ public class Chofer implements Runnable{
     private void esperarCliente() {
         //Simula esperar un cliente
         this.taxi.acquireHayCliente();//Espera
-        Debugger.hayCliente(id, this.taxi.getPasajeroActualAux());//DEBUG
+        Debugger.hayCliente(i);//DEBUG
     }
 
     private void manejar() {
