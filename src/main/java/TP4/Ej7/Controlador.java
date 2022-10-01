@@ -9,5 +9,7 @@ package TP4.Ej7;
  * @author KevinDL
  */
 public class Controlador {
+    private GestorCruce gestorCruce;
+    
     
 }

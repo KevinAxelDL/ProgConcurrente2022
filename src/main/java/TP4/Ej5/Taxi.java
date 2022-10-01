@@ -15,7 +15,6 @@ public class Taxi {
     private Semaphore hayCliente = new Semaphore(0);
     private Semaphore asiento = new Semaphore(1, true);
     private Semaphore enDestino = new Semaphore(0);
-    private String pasajeroActualAux;//DEBUG
 
     Taxi(String generarUnId) {
         //...
@@ -29,7 +28,7 @@ public class Taxi {
         }
     }
     
-    public synchronized void acquireAsiento(String id){
+    public void acquireAsiento(String id){
         //DEGUG: Los synchronized sirven para la consistencia de los mensajes
         try{
             asiento.acquire();
