@@ -13,54 +13,50 @@ import java.util.concurrent.Semaphore;
 public class Taxi {
     //Rec. compartido
     private Semaphore hayCliente = new Semaphore(0);
-    private Semaphore asiento = new Semaphore(1, true);
+    private Semaphore asiento = new Semaphore(1);
     private Semaphore enDestino = new Semaphore(0);
 
     Taxi(String generarUnId) {
         //...
     }
     
-    public void acquireHayCliente(){
+    //Mensajes para Chofer
+    
+    public void esperarCliente(){
+        System.out.println("(...) CHOFER espera un cliente");//DEBUG
         try{
             hayCliente.acquire();
         }catch(InterruptedException e){
             System.out.println(e.getMessage());
         }
+        System.out.println("(!!!) CHOFER arranca");//DEBUG
     }
     
-    public void acquireAsiento(String id){
-        //DEGUG: Los synchronized sirven para la consistencia de los mensajes
+    public void notificarEnDestino(){
+        System.out.println("(D!!) CHOFER llego a destino");
+        this.enDestino.release();
+    }
+    
+    //Mensajes para Pasajero
+    
+    public void sentarse(String id){
+        System.out.println("(---) "+ id +" espera el taxi");//DEBUG
         try{
             asiento.acquire();
         }catch(InterruptedException e){
             System.out.println(e.getMessage());
         }
-        synchronized(this){
-            this.pasajeroActualAux = id;//DEBUG
-        }
-    }
-    
-    public void acquireEnDestino(){    
-        try{
-            enDestino.acquire();
-        }catch(InterruptedException e){
-            System.out.println(e.getMessage());
-        }
-    }
-    
-    public void releaseHayCliente(){
+        System.out.println("(-->) "+ id +" subio al taxi!");//DEBUG
         hayCliente.release();
     }
     
-    public void releaseAsiento(){
+    public void abajarse(String id){
+        try{
+            enDestino.acquire();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("(<--) "+ id +" libera el taxi");//DEBUG
         asiento.release();
-    }
-    
-    public void releaseEnDestino(){
-        enDestino.release();
-    }
-
-    public String getPasajeroActualAux() {
-        return pasajeroActualAux;
     }
 }

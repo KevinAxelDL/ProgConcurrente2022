@@ -13,28 +13,15 @@ public class Pasajero implements Runnable {
     private String id;
     private Taxi taxi;
 
-    public Pasajero(String id, Taxi taxi) {
-        
+    public Pasajero(String id, Taxi taxi) {  
         this.id = id;
         this.taxi = taxi;
     }
 
-    private void subirAlTaxi() {
-        
-        taxi.acquireAsiento(id);//Se sienta
-        taxi.releaseHayCliente();//Avisa que subio
-    }
-
-    private void bajarDelTaxi() {
-        
-        taxi.acquireEnDestino();
-        taxi.releaseAsiento();//Libera el asiento
-    }
-
     public void run() {
         while (true) {
-            subirAlTaxi();
-            bajarDelTaxi();
+            taxi.sentarse(id);
+            taxi.abajarse(id);
         }
     }
 }

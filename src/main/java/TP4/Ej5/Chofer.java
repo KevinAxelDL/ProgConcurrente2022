@@ -18,30 +18,15 @@ public class Chofer implements Runnable{
         this.taxi = taxi;
     }
 
-    private void esperarCliente() {
-        //Simula esperar un cliente
-        this.taxi.acquireHayCliente();//Espera
-        Debugger.hayCliente(i);//DEBUG
-    }
-
-    private void manejar() {
-        //Maneja hasta el destino
-        String pasajero = this.taxi.getPasajeroActualAux();
-        Debugger.manejar(id, pasajero);//DEBUG
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-        this.taxi.releaseEnDestino();
-        Debugger.enDestino(id, pasajero);//DEBUG
-    }
-
     public void run() {
         while (true) {
-            esperarCliente();
-            manejar();//Cliente a bordo
-            this.taxi.releaseEnDestino();//Se baja el cliente
+            taxi.esperarCliente();
+            try{
+                Thread.sleep(3000);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            taxi.notificarEnDestino();
         }
         
     }
