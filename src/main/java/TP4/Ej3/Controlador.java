@@ -13,7 +13,7 @@ import java.util.concurrent.Semaphore;
 public class Controlador {
     /*
     Orden de ejecucion:
-    P1 > P3 > P2
+    P1 -> P3 -> P2
     */
     protected Semaphore sem1;
     protected Semaphore sem2;
@@ -23,5 +23,7 @@ public class Controlador {
         this.sem1 = new Semaphore(1);
         this.sem2 = new Semaphore(0);
         this.sem3 = new Semaphore(0);
-    }        
+    }
+    
+    
 }

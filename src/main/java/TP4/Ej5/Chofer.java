@@ -28,6 +28,5 @@ public class Chofer implements Runnable{
             }
             taxi.notificarEnDestino();
         }
-        
     }
 }
