@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ProblemasClasicos.ProductorConsumidor;
+package ProblemasClasicos.ProductorConsumidorV1;
 
 /**
  *
  * @author kevin.dittler
  */
-public class Consumidor implements Runnable{
+public class Productor implements Runnable{
     //Obj.Activo
     private String id;
     private Buffer buffer;
     
     public void run(){
     }
-    
 }
