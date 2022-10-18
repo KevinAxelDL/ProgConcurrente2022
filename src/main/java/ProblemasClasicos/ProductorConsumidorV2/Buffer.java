@@ -5,10 +5,7 @@
  */
 package ProblemasClasicos.ProductorConsumidorV2;
 
-import ProblemasClasicos.ProductorConsumidorV1.*;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

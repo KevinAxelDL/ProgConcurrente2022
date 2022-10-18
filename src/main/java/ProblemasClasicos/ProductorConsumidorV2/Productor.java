@@ -5,8 +5,6 @@
  */
 package ProblemasClasicos.ProductorConsumidorV2;
 
-import ProblemasClasicos.ProductorConsumidorV1.*;
-
 /**
  *
  * @author kevin.dittler

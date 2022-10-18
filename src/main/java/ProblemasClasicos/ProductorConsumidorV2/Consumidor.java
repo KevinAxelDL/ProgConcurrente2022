@@ -5,10 +5,6 @@
  */
 package ProblemasClasicos.ProductorConsumidorV2;
 
-import ProblemasClasicos.ProductorConsumidorV1.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author kevin.dittler
