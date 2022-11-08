@@ -9,5 +9,7 @@ package TP5.Ej2;
  * @author KevinDL
  */
 public class Perro {
-    
+    public static void main(String[] args) {
+        
+    }
 }

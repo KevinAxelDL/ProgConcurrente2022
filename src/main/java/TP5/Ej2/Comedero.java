@@ -14,10 +14,11 @@ import java.util.logging.Logger;
  */
 public class Comedero {
     private Semaphore semMutex = new Semaphore(1);//Exlusion mutua
-    int permisosGatos = 5;//Referencia
-    int permisosPerros = 5;//Referencia
-    private Semaphore semPermisosGatos = new Semaphore(permisosGatos);
-    private Semaphore semPermisosPerros = new Semaphore(permisosPerros);
+    private int platosReferencia = 5;//Referencia
+    private Semaphore platos = new Semaphore(platosReferencia);
+    //
+    private Semaphore gatoPuedeComer;//Lista de espera
+    private Semaphore perroPuedeComer;//Lista de espera
     //
     private final int perrosPorTurno = 10;//Cant. minima de perros que comen por turno//Referencia
     private final int gatosPorTurno = 10;//Cant. minima de gatos que comen por turno//Referencia
@@ -33,12 +34,7 @@ public class Comedero {
     //Metodos para Perro
     
     private void bloquearGatos(){
-        try {
-            //Evita que entren gatos a comer
-            this.semPermisosGatos.acquire(permisosGatos);
-        } catch (InterruptedException ex) {
-            System.out.println(ex.getMessage());
-        }
+    
     }
     
     public void comer(String id){
