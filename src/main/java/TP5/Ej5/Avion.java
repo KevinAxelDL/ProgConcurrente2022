@@ -24,7 +24,14 @@ public class Avion implements Runnable{
 
     public void run() {
         pista.aterrizar(this.id);
-        System.out.println("([.]) "+ this.id + " espera en hangar");//DEBUG
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Avion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("[.] "+ this.id + " espera en hangar");//DEBUG
         
         try {
             Thread.sleep(3000);
