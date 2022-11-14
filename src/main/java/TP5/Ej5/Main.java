@@ -16,7 +16,7 @@ public class Main {
         GeneradorIds genIdAvion = new GeneradorIds("AVION");
         Pista pista = new Pista();
         //
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 24; i++) {
             Avion a = new Avion(genIdAvion.generarUnId(), pista);
             Thread t = new Thread(a);
             t.start();

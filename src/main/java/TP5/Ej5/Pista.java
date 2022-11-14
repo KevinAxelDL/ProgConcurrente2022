@@ -46,40 +46,43 @@ public class Pista {
 
         try {
             //NOTA: Nadie puede usar las pista mientas un avion aterriza
+            //Puede implementarse mejor esta espera
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Pista.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //System.out.println("(!!!) " + id + " libero la pista");//DEBUG
-        this.cantAterrizajes++;
-        System.out.println("Cant.Aterrizajes [" + this.cantAterrizajes + "/10]");
-
+        //Ya esta en el hangar
         try {
             this.semMutexD.acquire();//EXM
+
+            this.esperaDCant++;//Se suma a los aviones esperando en el hangar
+            this.cantAterrizajes++;
+            System.out.println("Cant.Aterrizajes [" + this.cantAterrizajes + "/10]");
+
             if (this.esperaDCant > 0) {
                 //Hay aviones esperando para despegar
                 if (cantAterrizajes == 10) {
                     //Maxima cantidad de aterrizajes acumulados es 10
-                    System.out.println("Maxima cantidad de aterrizajes acumulados es 10!");
+                    System.out.println("Maxima cantidad de aterrizajes acumulados es 10!");//DEBUG
                     this.cantAterrizajes = 0;//Se reinicia
                     semEsperaD.release();
                 } else {
+
                     if (this.esperaACant == 0) {
-                        System.out.println("No hay aviones esperando para aterrizar!");
+                        System.out.println("No hay aviones esperando para aterrizar!");//DEBUG
                         //No hay aviones esperando para aterrizar
                         semEsperaD.release();
                     } else {
                         //No se cumple ninguna condicion
-                        System.out.println("(!) pista despejada");
+                        System.out.println("(!) pista despejada");//DEBUG
                         this.semEsperaA.release();//Notifica que la pista esta libre
                     }
                 }
             } else {
-                System.out.println("(!) pista despejada");
+                System.out.println("(!) pista despejada");//DEBUG
                 this.semEsperaA.release();//Notifica que la pista esta libre
             }
-
             this.semMutexD.release();//EXM
             this.semMutexA.release();//EXM
         } catch (InterruptedException ex) {
@@ -90,35 +93,33 @@ public class Pista {
 
     public void despegar(String id) {
 
-        try {
-            System.out.println("--- " + id + " quiere despegar");//DEBUG
-            this.semMutexD.acquire();//EXM
-            this.esperaDCant++;
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Pista.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.semMutexD.release();//EXM
+        System.out.println("--- " + id + " quiere despegar");//DEBUG
 
         try {
             this.semEsperaD.acquire();//Espera para despegar
-            this.semMutexD.acquire();//EXM
             System.out.println("<-- " + id + " DESPEGO!");//DEBUG
 
             try {
                 //NOTA: Nadie puede usar las pista mientas un avion despega
+                //Puede implementarse mejor esta espera
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Pista.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             //Ya despeguo
-            this.semEsperaA.release();//Notifica que la pista esta libre
             this.semMutexA.acquire();//EXM
             if (this.esperaACant == 0) {
                 //No hay nadie esperando para aterrizar, notifica que otros pueden despegar
                 this.semEsperaD.release();
+            } else {
+                if (this.esperaACant > 0) {
+                    //Hay aviones esperando para aterrizar, tienen prioridad
+                    this.semEsperaA.release();//Notifica que la pista esta libre
+                }
             }
             this.semMutexA.release();//EXM
+            this.semMutexD.acquire();//EXM
         } catch (InterruptedException ex) {
             Logger.getLogger(Pista.class.getName()).log(Level.SEVERE, null, ex);
         }
