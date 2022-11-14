@@ -34,7 +34,7 @@ public class Visitante implements Runnable {
             this.monitor.salirVi(id);
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Visitante.class.getName()).log(Level.SEVERE, null, ex);
             }

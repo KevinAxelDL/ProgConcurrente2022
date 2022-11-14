@@ -34,7 +34,7 @@ public class Investigador implements Runnable {
             this.monitor.salirIn(id);
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Investigador.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -22,16 +22,16 @@ public class Main {
             t.start();
         }
         
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 10; i++){
             //Mantenimiento
-            Visitante v = new Visitante(genMan.generarUnId(),lista);
+            Mantenimiento v = new Mantenimiento(genMan.generarUnId(),lista);
             Thread t = new Thread(v);
             t.start();
         }
         
         for(int i = 0; i < 10; i++){
             //Investigadores
-            Visitante v = new Visitante(genInv.generarUnId(),lista);
+            Investigador v = new Investigador(genInv.generarUnId(),lista);
             Thread t = new Thread(v);
             t.start();
         }

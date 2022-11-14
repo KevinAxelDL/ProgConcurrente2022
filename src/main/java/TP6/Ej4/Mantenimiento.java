@@ -34,7 +34,7 @@ public class Mantenimiento implements Runnable {
             this.monitor.salirMa(id);
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
             }

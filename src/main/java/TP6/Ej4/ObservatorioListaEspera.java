@@ -17,9 +17,9 @@ public class ObservatorioListaEspera {
     private int capacidadMax = 5;
     private int capacidadAct = 0;
     //
-    private int permisosVisitante = 5;//DEBUG
-    private int permisosInvestigador = 5;//DEBUG
-    private int permisosMantenimiento = 5;//DEBUG
+    private int cantVisitantes = 0;
+    private int cantMantenimiento = 0;
+    private int cantInvestigadores = 0;
     //
 
     public ObservatorioListaEspera() {
@@ -30,7 +30,7 @@ public class ObservatorioListaEspera {
     //
     //Metodos para Visitante
     public synchronized void entrarVi(String id) {
-        while ((this.capacidadAct >= this.capacidadMax || this.permisosVisitante == 0)) {
+        while (this.capacidadAct >= this.capacidadMax || this.cantInvestigadores > 0 || this.cantMantenimiento > 0) {
             //No hay espacio en el recinto o no esta habilitado
             try {
                 this.wait();
@@ -39,6 +39,7 @@ public class ObservatorioListaEspera {
             }
         }
         this.capacidadAct++;
+        this.cantVisitantes++;
         System.out.println("--> " + id + " ingreso al recinto");
         System.out.println("ESPACIO [" + this.capacidadAct + "/" + this.capacidadMax + "]");
         this.notifyAll();//Notifica a otros que pueden entrar
@@ -47,15 +48,16 @@ public class ObservatorioListaEspera {
     public synchronized void salirVi(String id) {
         //Para salir del recinto
         this.capacidadAct--;
-        this.permisosVisitante--;
+        this.cantVisitantes--;
         this.notifyAll();//Notifica a otros que pueden entrar
     }
 
     
     //Metodos para Investigador
     public synchronized void entrarIn(String id) {
-        while ((this.capacidadAct >= this.capacidadMax || this.permisosVisitante > 0 || this.permisosMantenimiento > 0)) {
-            //No hay espacio en el recinto o no esta habilitado
+        while (this.capacidadAct >= this.capacidadMax || this.cantMantenimiento > 0 || this.cantVisitantes > 0 || this.cantInvestigadores > 0) {
+            
+//No hay espacio en el recinto o no esta habilitado
             try {
                 this.wait();
             } catch (InterruptedException ex) {
@@ -63,6 +65,7 @@ public class ObservatorioListaEspera {
             }
         }
         this.capacidadAct++;
+        this.cantInvestigadores++;
         System.out.println("--> " + id + " ingreso al recinto");
         System.out.println("ESPACIO DISPONIBLE[" + this.capacidadAct + "/" + this.capacidadMax + "]");
         this.notifyAll();//Notifica a otros que pueden entrar
@@ -71,15 +74,14 @@ public class ObservatorioListaEspera {
     public synchronized void salirIn(String id) {
         //Para salir del recinto
         this.capacidadAct--;
-        this.permisosInvestigador--;
-        this.permisosMantenimiento = 10;
+        this.cantInvestigadores--;
         this.notifyAll();//Notifica a otros que pueden entrar
     }
     
     
     //Metodos para Mantenimiento
     public synchronized void entrarMa(String id) {
-        while ((this.capacidadAct >= this.capacidadMax || this.permisosVisitante > 0)) {
+        while ((this.capacidadAct >= this.capacidadMax || this.cantVisitantes > 0 || this.cantInvestigadores > 0)) {
             //No hay espacio en el recinto o no esta habilitado
             try {
                 this.wait();
@@ -88,6 +90,7 @@ public class ObservatorioListaEspera {
             }
         }
         this.capacidadAct++;
+        this.cantMantenimiento++;
         System.out.println("--> " + id + " ingreso al recinto");
         System.out.println("ESPACIO DISPONIBLE[" + this.capacidadAct + "/" + this.capacidadMax + "]");
         this.notifyAll();//Notifica a otros que pueden entrar
@@ -96,9 +99,7 @@ public class ObservatorioListaEspera {
     public synchronized void salirMa(String id) {
         //Para salir del recinto
         this.capacidadAct--;
-        this.permisosMantenimiento--;
-        this.permisosInvestigador = 10;
-        this.permisosVisitante = 10;
+        this.cantMantenimiento--;
         this.notifyAll();//Notifica a otros que pueden entrar
     }
 
