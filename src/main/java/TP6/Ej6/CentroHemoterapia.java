@@ -17,8 +17,8 @@ public class CentroHemoterapia {
 
     private ReentrantLock lockCamillas = new ReentrantLock(true);
     //
-    private Condition esperaRevistas = lockCamillas.newCondition();//Condicion a sociada al lock
-    private Condition esperaTV = lockCamillas.newCondition();//Condicion a sociada al lock
+    private Condition esperaCamilla = lockCamillas.newCondition();//Condicion a sociada al lock
+    private Condition esperaCamillaoRevista = lockCamillas.newCondition();//Condicion a sociada al lock
     //
     private int cantCamillas = 4;
     private int cantCamillasOcu = 0;
@@ -28,7 +28,7 @@ public class CentroHemoterapia {
 
     //Metodos para Paciente
     public void ocuparCamilla(String id) {
-        this.lockCamillas.lock();
+        this.lockCamillas.lock();//EXM
         try {
             //EXM
             while (this.cantCamillasOcu >= this.cantCamillas) {
@@ -40,22 +40,22 @@ public class CentroHemoterapia {
                     System.out.println("REVISTAS DISPONIBLES [" + (this.cantRevistas - this.cantRevistasOcu) + "/" + this.cantRevistas + "]");
                     
                     try {
-                        this.esperaRevistas.await();//Espera
+                        this.esperaCamilla.await();//Espera
                     } catch (InterruptedException ex) {
                         Logger.getLogger(CentroHemoterapia.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
-                    this.cantRevistasOcu--;
+                    this.cantRevistasOcu--;//Deja la revista
+                    this.esperaCamillaoRevista.signal();//Notifica a alguien mirando la TV
                 } else {
                     //El paciente mira la TV
                     System.out.println(",,, " + id + " espera mirando la TV");//DEBUG
                     
                     try {
-                        this.esperaTV.await();//Espera
+                        this.esperaCamillaoRevista.await();//Espera
                     } catch (InterruptedException ex) {
                         Logger.getLogger(CentroHemoterapia.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
                 }
             }
             //Camilla disponible
@@ -69,18 +69,14 @@ public class CentroHemoterapia {
     }
 
     public void liberarCamilla(String id) {
-        this.lockCamillas.lock();
+        this.lockCamillas.lock();//EXM
         try {
             //Libera una camilla
-            //EXM
             this.cantCamillasOcu--;
             System.out.println("<-- " + id + " LIBERO una camilla!!");//DEBUG
-            this.esperaRevistas.signalAll();//Notifica
-            this.esperaTV.signalAll(); //Notifica
-            
+            this.esperaCamilla.signal();//Notifica a alguien leyendo una revista
         } finally {
             this.lockCamillas.unlock();//EXM
         }
     }
-
 }
