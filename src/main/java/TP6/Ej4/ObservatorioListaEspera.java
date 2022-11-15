@@ -12,6 +12,11 @@ import java.util.logging.Logger;
  * @author KevinDL
  */
 public class ObservatorioListaEspera {
+    /*
+    NOTA: Puede mejorarse la implementacion si en vez de usar contadores se
+    usaran permisos para los 3 tipos de individuos
+    */
+    
 
     //Monitor
     private int capacidadMax = 5;
