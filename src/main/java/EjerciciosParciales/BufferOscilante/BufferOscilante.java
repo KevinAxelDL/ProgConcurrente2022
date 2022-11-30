@@ -19,7 +19,7 @@ public class BufferOscilante {
     private ReentrantLock lockC1 = new ReentrantLock(true);
     private ReentrantLock lockC2 = new ReentrantLock(true);
     private Condition esperaLockC2 = lockC2.newCondition();//Conjunto de espera
-    private ReentrantLock lockMutex = new ReentrantLock(true);//Exclusion para consultas y modificaciones que pueden resultar en oscilacion
+    private ReentrantLock lockMutex = new ReentrantLock(true);//Exclusion para mensajes
     //
     private LinkedList cola1 = new LinkedList();
     private LinkedList cola2 = new LinkedList();
