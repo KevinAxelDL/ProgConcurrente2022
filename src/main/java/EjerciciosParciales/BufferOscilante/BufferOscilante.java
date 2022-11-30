@@ -28,36 +28,34 @@ public class BufferOscilante {
 
     //Metodos genericos
     public void oscilar() {
-        this.lockMutex.lock();//EXM-mutex
-        if (this.cola1.isEmpty() || this.cola2.isEmpty()) {
-            //Luego de una extraccion o insercion
-            //Si alguna de las 2 colas esta vacia se cambian las etiquetas
+        if (this.cola2.isEmpty()) {
+            this.lockC1.lock();//EXM-C1
+            //Antes de una extraccion
+            //Si la cola de extraccion actual esta vacia oscila
             this.colaAux = this.cola1;
             this.cola1 = this.cola2;
             this.cola2 = this.colaAux;
-            System.out.println("CAMBIO DE ETIQUETAS");//DEBUG
+            System.out.println("(CAMBIO DE ETIQUETAS)");//DEBUG
+            this.lockC1.unlock();//EXM-C1
         }
-        this.lockMutex.unlock();//EXM-mutex
     }
 
     //Metodos para Insertor
     public void insertar(Object obj) {
         this.lockC1.lock();//EXM-C1
-        this.lockMutex.lock();//EXM-mutex
+        
         this.cola1.add(obj);
 
         this.lockC2.lock();//EXM-C2
         this.esperaLockC2.signal();//Notifica que se agrego un elemento
         this.lockC2.unlock();//EXM-C2
 
+        this.lockMutex.lock();//EXM-mutex
         System.out.println("INSERCION");//DEBUG
         System.out.println(this.cola1.toString());//DEBUG
         System.out.println(this.cola2.toString());//DEBUG
         System.out.println("----");//DEBUG
-
         this.lockMutex.unlock();//EXM-mutex
-
-        this.oscilar();
 
         this.lockC1.unlock();//EXM-C1
     }
@@ -65,31 +63,29 @@ public class BufferOscilante {
     //Metodos para Extractor
     public void extraer() {
         this.lockC2.lock();//EXM-C2
-        this.lockMutex.lock();//EXM-mutex
+        
+        this.oscilar();//Verifica si debe oscilar o no antes de una extraccion
 
         while (this.cola2.isEmpty()) {
             //Cola vacia, espera a que haya un objeto
-            this.lockMutex.unlock();//EXM-mutex
-
             try {
+                System.out.println(Thread.currentThread()+"AAAAAA");
                 this.esperaLockC2.await();
+                this.oscilar();//Verifica si debe oscilar o no antes de una extraccion
             } catch (InterruptedException ex) {
                 Logger.getLogger(BufferOscilante.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            this.lockMutex.lock();//EXM-mutex
         }
 
         this.cola2.remove();
-
+        
+        this.lockMutex.lock();//EXM-mutex
         System.out.println("EXTRACCION");//DEBUG
+        System.out.println(Thread.currentThread()+" EXTRAE");
         System.out.println(this.cola1.toString());//DEBUG
         System.out.println(this.cola2.toString());//DEBUG
         System.out.println("----");//DEBUG
-
         this.lockMutex.unlock();//EXM-mutex
-
-        this.oscilar();
 
         this.lockC2.unlock();//EXM-C2
     }

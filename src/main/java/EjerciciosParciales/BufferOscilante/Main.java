@@ -16,14 +16,14 @@ public class Main {
         GeneradorIds genIdIn = new GeneradorIds("INSERTOR");
         GeneradorIds genIdEx = new GeneradorIds("EXTRACTOR");
         
-        for(int i = 0; i <= 5; i++){
+        for(int i = 0; i < 5; i++){
             //Insertores
             Insertor in = new Insertor(buffer, 1);
             Thread t = new Thread(in);
             t.start();
         }
         
-        for(int i = 0; i <= 5; i++){
+        for(int i = 0; i < 5; i++){
             //Extractores
             Extractor ex = new Extractor(buffer);
             Thread t = new Thread(ex);
